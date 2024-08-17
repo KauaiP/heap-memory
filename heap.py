@@ -6,6 +6,7 @@ var_assign = []
 
 def adjust(heap, lista):
     cont = 0
+
     for i in range(len(heap)):
         if (heap[i] == '.'):
             cont = cont + 1
@@ -23,6 +24,7 @@ def adjust(heap, lista):
 
 def there_is_space(lista, size):
     pointer = lista.head
+
     while (pointer):
         if (pointer.quantity >= size):
             return True
@@ -33,6 +35,7 @@ def there_is_space(lista, size):
 def best_fit(lista, heap, tag, size):
     pointer = lista.head
     best_register = pointer
+
     while (pointer):
         dist1 = pointer.quantity - size
         dist2 = best_register.quantity - size
@@ -44,12 +47,14 @@ def best_fit(lista, heap, tag, size):
 
     start_value = best_register.address
     end_value = best_register.address + size
+
     for i in range(start_value, end_value):
         heap[i] = tag
     
 
 def first_fit(lista, heap, tag, size):
     pointer = lista.head
+
     while (pointer):
         if (pointer.quantity >= size):
             break
@@ -57,6 +62,7 @@ def first_fit(lista, heap, tag, size):
     
     start_value = pointer.address
     end_value = pointer.address + size
+
     for i in range(start_value, end_value):
         heap[i] = tag
     
@@ -64,6 +70,7 @@ def first_fit(lista, heap, tag, size):
 def worst_fit(lista, heap, tag, size):
     pointer = lista.head
     bigger = pointer
+
     while (pointer):
         if(pointer.quantity > bigger.quantity):
             bigger = pointer
@@ -71,6 +78,7 @@ def worst_fit(lista, heap, tag, size):
 
     start_value = bigger.address
     end_value = bigger.address + size
+
     for i in range(start_value, end_value):
         heap[i] = tag
     
@@ -78,19 +86,18 @@ def worst_fit(lista, heap, tag, size):
 def next_fit(lista, heap, tag, size, last_alocation):
     pointer = lista.head
     ja = False
+    
     while (pointer):
         if(pointer.quantity >= size and ja == False):
             possible_regist = pointer
             ja = True
-        
         if(pointer.address > last_alocation and pointer.quantity >= size):
             break
         pointer = pointer.next
     
     if(pointer != None):
         for i in range(pointer.address, pointer.address + size):
-            heap[i] = tag
-        
+            heap[i] = tag       
     else:
         for i in range(possible_regist.address, possible_regist.address + size):
             heap[i] = tag
@@ -144,8 +151,11 @@ def delete_assing(var):
 def functions(instruct, heap):
     global lastAlocation
     global assign
+
     operation = str(input())
+
     while(operation[0] != 'h'):
+
         if operation == 'sair':
             break
 
@@ -163,13 +173,10 @@ def functions(instruct, heap):
 
             if (instruct == "heap best"):
                best_fit(lista, heap, tag, size)
-
             elif (instruct == 'heap worst'):
                 worst_fit(lista, heap, tag, size)
-
             elif (instruct == 'heap first'):
                 first_fit(lista, heap, tag, size)
-
             elif (instruct == 'heap next'):
                 next_fit(lista, heap, tag, size, lastAlocation)
 
@@ -180,15 +187,19 @@ def functions(instruct, heap):
 
         elif (operation[0] == 'd' and operation[1] == 'e' and operation[2] == 'l'):
             tag = operation[4]
+
             if (tag in var_assign):
                 delete_assing(tag)
             else:
                 delete(heap, tag)
+
         elif (operation[0] == 'e'):
             exibe(heap)
+
         elif(operation[2] == '='):
             var_assign.append((operation[0], operation[4]))
             assign.append(f'{operation[0]} = {operation[4]}')
+            
         else:
             print('comando inválido')
 
