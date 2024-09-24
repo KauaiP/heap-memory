@@ -2,11 +2,9 @@ from linkedlist import LinkedList
 
 lastAlocation = -1
 assign = []
-var_assign = []
 
-def adjust(heap, lista):
+def adjustList(heap, lista): #Percorre o vetor da heap e constói uma lista com os espaços disponíveis
     cont = 0
-
     for i in range(len(heap)):
         if (heap[i] == '.'):
             cont = cont + 1
@@ -160,7 +158,7 @@ def functions(instruct, heap):
             break
 
         lista = LinkedList()
-        adjust(heap, lista)
+        adjustList(heap, lista)
 
         if(operation[0] == 'n' and operation[1] == 'e' and operation[2] == 'w'):
             tag = operation[4]
@@ -170,7 +168,6 @@ def functions(instruct, heap):
                 print('Não há espaço suficiente para alocar esta quantidade de dados')
                 operation = str(input())
                 continue
-
             if (instruct == "heap best"):
                best_fit(lista, heap, tag, size)
             elif (instruct == 'heap worst'):
@@ -188,7 +185,7 @@ def functions(instruct, heap):
         elif (operation[0] == 'd' and operation[1] == 'e' and operation[2] == 'l'):
             tag = operation[4]
 
-            if (tag in var_assign):
+            if (tag in assign):
                 delete_assing(tag)
             else:
                 delete(heap, tag)
@@ -197,7 +194,6 @@ def functions(instruct, heap):
             exibe(heap)
 
         elif(operation[2] == '='):
-            var_assign.append((operation[0], operation[4]))
             assign.append(f'{operation[0]} = {operation[4]}')
             
         else:
